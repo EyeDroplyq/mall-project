@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: mall-third-party
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+server:
+  port: 30000
+alibaba:
+  cloud:
+    access-key: LTAI5t8SfwmNDdRUkDMvvs68
+    secret-key: RlSh3f228jVtCX3jTpr3wvs37mFQ76
+    oss:
+      endpoint: oss-cn-beijing.aliyuncs.com
+      bucket: mall-project-lyq
+    sms:
+      host: https://gyytz.market.alicloudapi.com
+      path: /sms/smsSend
+      appcode: f72f008b2bb44ef3a5c715ff146aa39a
+      smsSignId: 2e65b1bb3d054466b82f0c9d125465e2
+      templateId: a09602b817fd47e59e7c6e603d3f088d

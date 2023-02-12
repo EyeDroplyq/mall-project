@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.home.mall.product.dao.SkuSaleAttrValueDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.home.mall.product.entity.SkuSaleAttrValueEntity" id="skuSaleAttrValueMap">
+        <result property="id" column="id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="attrId" column="attr_id"/>
+        <result property="attrName" column="attr_name"/>
+        <result property="attrValue" column="attr_value"/>
+        <result property="attrSort" column="attr_sort"/>
+    </resultMap>
+    <resultMap id="SkuItemSaleAttrVo" type="com.home.mall.product.vo.SkuItemVo$SkuItemSaleAttrVo">
+        <result column="attr_id" property="attrId"/>
+        <result column="attr_name" property="attrName"/>
+        <collection property="attrValues" ofType="com.home.mall.product.vo.SkuItemVo$AttrValueWithSkuIdVo">
+            <result column="attr_value" property="attrValue"/>
+            <result column="sku_ids" property="skuIds"/>
+        </collection>
+    </resultMap>
+    <select id="getSpuSaleAttrBySpuId" resultMap="SkuItemSaleAttrVo">
+        SELECT saleattr.attr_id,
+               saleattr.attr_name,
+               saleattr.attr_value                   AS attr_value,
+               GROUP_CONCAT(DISTINCT skuinfo.sku_id) AS sku_ids
+        FROM `pms_sku_info` skuinfo
+                 LEFT JOIN `pms_sku_sale_attr_value` saleattr
+                           ON skuinfo.sku_id = saleattr.sku_id
+        WHERE skuinfo.spu_id = #{spuId}
+        GROUP BY saleattr.attr_id, saleattr.attr_name, saleattr.attr_value
+    </select>
+    <select id="getProductAttributesList" resultType="java.lang.String">
+        SELECT CONCAT(attr_name, "：", attr_value)
+        FROM `pms_sku_sale_attr_value`
+        WHERE sku_id = #{skuId}
+    </select>
+
+
+</mapper>
