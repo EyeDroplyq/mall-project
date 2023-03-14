@@ -4,7 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.home.common.exception.BizErrorEnum;
 import com.home.common.to.HasStockTo;
+import com.home.mall.ware.exception.WareException;
+import com.home.mall.ware.vo.LockStockResult;
+import com.home.mall.ware.vo.WareSkuLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,13 +32,23 @@ public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
 
+    @PostMapping("/lock/order")
+    public R lockOrder(@RequestBody WareSkuLock vo){
+        try {
+            Boolean stockResults=wareSkuService.lockOrder(vo);
+            return R.ok();
+        }catch (WareException e){
+            return R.error(BizErrorEnum.NoStock_EXCEPTION.getCode(), BizErrorEnum.NoStock_EXCEPTION.getMsg());
+        }
+    }
+
     /**
      * 查询是否有库存
      */
     @PostMapping("/hasstock")
     public R hasStock(@RequestBody List<Long> skuIds){
         List<HasStockTo> data=wareSkuService.hasStock(skuIds);
-        return R.ok().put("data", data);
+        return R.ok().setDate(data);
     }
 
 

@@ -1,14 +1,11 @@
 package com.home.mall.member.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.home.mall.member.entity.MemberReceiveAddressEntity;
 import com.home.mall.member.service.MemberReceiveAddressService;
@@ -30,6 +27,18 @@ public class MemberReceiveAddressController {
     @Autowired
     private MemberReceiveAddressService memberReceiveAddressService;
 
+
+    //根据地址id来获取收货人的信息
+    @GetMapping("/{addrId}/getReceiveMember")
+    public MemberReceiveAddressEntity getReceiveMember(@PathVariable("addrId")Long addrId){
+        return memberReceiveAddressService.getReceiveMember(addrId);
+    }
+
+
+    @GetMapping("/{userId}/getUserAddress")
+    public List<MemberReceiveAddressEntity> address(@PathVariable("userId")Long userId){
+        return memberReceiveAddressService.getUserAddress(userId);
+    }
     /**
      * 列表
      */

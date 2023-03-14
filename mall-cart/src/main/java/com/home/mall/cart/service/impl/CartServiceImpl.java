@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -172,6 +173,25 @@ public class CartServiceImpl implements CartService {
     public void deleteCartItem(Long skuId) {
         BoundHashOperations<String, Object, Object> cartOps = getCartOps();
         cartOps.delete(skuId.toString());
+    }
+
+    @Override
+    public List<CartItemInfoVo> getCartItems() {
+        UserInfoTo userInfoTo = CartInterceptor.threadLocal.get();
+        if(userInfoTo.getUserId()==null){
+            return null;
+        }else{
+            String cartKey= CART_PREFIX+userInfoTo.getUserId();
+            List<CartItemInfoVo> itemVos = getCartItemVo(cartKey);
+            //过滤出选中的购物项
+            //同时要查询最新的价格，保证下单的时候此时商品的价格是商品最新的价格
+            List<CartItemInfoVo> res = itemVos.stream().filter(item -> item.getCheck()).map(item->{
+                BigDecimal newPrice = productServiceFeign.getPrice(item.getSkuId());
+                item.setPrice(newPrice);
+                return item;
+            }).collect(Collectors.toList());
+            return res;
+        }
     }
 
     private CartItemInfoVo getCartItem(Long skuId) {

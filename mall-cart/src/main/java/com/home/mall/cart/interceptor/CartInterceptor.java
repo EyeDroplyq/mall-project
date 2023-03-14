@@ -34,9 +34,9 @@ public class CartInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        UserInfoTo userInfoTo = new UserInfoTo();
         HttpSession session = request.getSession();
         MemberRespVo member = (MemberRespVo) session.getAttribute(AuthServerConstant.LOGIN_USER);
-        UserInfoTo userInfoTo = new UserInfoTo();
         if(member!=null){
             //如果已经登录了,只需要保存用户id
             userInfoTo.setUserId(member.getId());

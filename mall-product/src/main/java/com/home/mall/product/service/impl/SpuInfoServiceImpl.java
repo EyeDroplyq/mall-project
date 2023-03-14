@@ -91,6 +91,8 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
      * @param vo
      */
     @Override
+//    @GlobalTransactional
+    @Transactional
     public void saveSpuInfo(SpuSaveVo vo) {
 
         //1、保存spu基本信息 pms_spu_info
@@ -330,6 +332,22 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         }
 
 
+    }
+
+    @Override
+    public SpuInfoRespVo getSpuInfo(Long skuId) {
+        SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
+        Long spuId = skuInfo.getSpuId();
+        SpuInfoEntity spuInfoEntity = this.baseMapper.selectById(spuId);
+        SpuBoundsEntity spuBounds = couponFeignService.getSpuBounds(spuId);
+        SpuInfoRespVo spuInfoRespVo = new SpuInfoRespVo();
+        spuInfoRespVo.setId(spuId);
+        spuInfoRespVo.setSpuName(spuInfoEntity.getSpuName());
+        spuInfoRespVo.setBrandId(spuInfoEntity.getBrandId());
+        spuInfoRespVo.setCatalogId(spuInfoEntity.getCatalogId());
+        spuInfoRespVo.setBuyBounds(spuBounds.getBuyBounds());
+        spuInfoRespVo.setGrowBounds(spuBounds.getGrowBounds());
+        return spuInfoRespVo;
     }
 
 }

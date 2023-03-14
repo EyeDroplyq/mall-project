@@ -4,7 +4,10 @@ import com.home.common.to.SkuReductionTo;
 import com.home.common.to.SpuBoundTo;
 import com.home.common.utils.R;
 import com.home.mall.product.vo.Bounds;
+import com.home.mall.product.vo.SpuBoundsEntity;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -25,4 +28,7 @@ public interface CouponFeignService {
 
     @PostMapping("/coupon/skufullreduction/saveinfo")
     R saveSkuReduction(@RequestBody SkuReductionTo skuReductionTo);
+
+    @GetMapping("/coupon/spubounds/{spuId}/getSpuBounds")
+    SpuBoundsEntity getSpuBounds(@PathVariable("spuId")Long spuId);
 }

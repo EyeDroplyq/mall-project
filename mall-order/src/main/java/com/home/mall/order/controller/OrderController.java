@@ -3,12 +3,9 @@ package com.home.mall.order.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.home.mall.order.entity.OrderEntity;
 import com.home.mall.order.service.OrderService;
@@ -30,13 +27,19 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+
+    @GetMapping("/getOrderStatus/{orderSn}")
+    public R getOrderStatus(@PathVariable("orderSn") String orderSn){
+        OrderEntity orderEntity=orderService.getOrderStaus(orderSn);
+        return R.ok().setDate(orderEntity);
+    }
+
     /**
      * 列表
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = orderService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 

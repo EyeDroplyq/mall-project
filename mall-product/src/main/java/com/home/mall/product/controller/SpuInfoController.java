@@ -6,6 +6,7 @@ import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import com.home.common.exception.BizErrorEnum;
+import com.home.mall.product.vo.SpuInfoRespVo;
 import com.home.mall.product.vo.SpuSaveVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,11 @@ import com.home.common.utils.R;
 public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
+
+    @GetMapping("/{skuId}/getSpuInfo")
+    public SpuInfoRespVo getSpuInfo(@PathVariable("skuId")Long skuId){
+        return spuInfoService.getSpuInfo(skuId);
+    }
 
     /**
      * 商品上架

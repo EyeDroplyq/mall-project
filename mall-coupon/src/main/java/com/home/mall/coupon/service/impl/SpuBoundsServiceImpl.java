@@ -26,4 +26,10 @@ public class SpuBoundsServiceImpl extends ServiceImpl<SpuBoundsDao, SpuBoundsEnt
         return new PageUtils(page);
     }
 
+    @Override
+    public SpuBoundsEntity getSpuBounds(Long spuId) {
+        SpuBoundsEntity entity = this.baseMapper.selectOne(new QueryWrapper<SpuBoundsEntity>().eq("spu_id", spuId));
+        return entity;
+    }
+
 }

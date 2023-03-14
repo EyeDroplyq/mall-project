@@ -3,6 +3,7 @@ package com.home.mall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.home.common.utils.PageUtils;
 import com.home.mall.product.entity.SpuInfoEntity;
+import com.home.mall.product.vo.SpuInfoRespVo;
 import com.home.mall.product.vo.SpuSaveVo;
 
 import java.io.IOException;
@@ -26,5 +27,7 @@ public interface SpuInfoService extends IService<SpuInfoEntity> {
     PageUtils querySpuInfo(Map<String, Object> params);
 
     void up(Long spuId) throws IOException;
+
+    SpuInfoRespVo getSpuInfo(Long skuId);
 }
 

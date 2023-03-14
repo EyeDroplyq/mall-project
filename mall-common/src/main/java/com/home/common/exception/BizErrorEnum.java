@@ -18,7 +18,8 @@ public enum BizErrorEnum {
     USERNAME_EXIST_EXCEPTION(15000,"用户名已存在"),
     PHONE_EXIST_EXCEPTION(15001,"手机号已存在"),
     USER_LOGIN_EXCEPTION(15002,"用户名或密码错误"),
-    PRODUCTUP_EXCEPTION(11000,"商品上架错误");
+    PRODUCTUP_EXCEPTION(11000,"商品上架错误"),
+    NoStock_EXCEPTION(21000,"商品没有库存");
 
     private Integer code;
     private String msg;

@@ -31,5 +31,18 @@ public class MallOrderApplicationTests {
         admin.declareBinding(new Binding("mall.queue", Binding.DestinationType.QUEUE,"exchange.mall","mall.queue",null));
 
     }
+    @Test
+    public void test(){
+        String s1=new String("abc");
+        String s2="abc";
+        String s3="a"+"bc";
+        System.out.println(s1==s2);
+        System.out.println(s2==s3);
+        System.out.println(s1.compareTo(s3));
+    }
+    @Test
+    public void test02(){
+
+    }
 
 }

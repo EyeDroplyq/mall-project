@@ -3,6 +3,8 @@ package com.home.mall.cart.service;
 import com.home.mall.cart.vo.CartItemInfoVo;
 import com.home.mall.cart.vo.CartVo;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: lyq
@@ -41,4 +43,6 @@ public interface CartService {
     void countItem(Long skuId, Integer num);
 
     void deleteCartItem(Long skuId);
+
+    List<CartItemInfoVo> getCartItems();
 }

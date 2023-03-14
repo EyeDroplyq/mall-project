@@ -19,6 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class MemberRespVo implements Serializable {
 
+
     /**
      * id
      */

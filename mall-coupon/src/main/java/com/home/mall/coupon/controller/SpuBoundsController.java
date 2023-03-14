@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.home.mall.coupon.entity.SpuBoundsEntity;
@@ -25,6 +26,11 @@ import com.home.common.utils.R;
 public class SpuBoundsController {
     @Autowired
     private SpuBoundsService spuBoundsService;
+
+    @GetMapping("/{spuId}/getSpuBounds")
+    public SpuBoundsEntity getSpuBounds(@PathVariable("spuId")Long spuId){
+        return spuBoundsService.getSpuBounds(spuId);
+    }
 
     /**
      * 列表
@@ -51,6 +57,7 @@ public class SpuBoundsController {
      * 保存
      */
     @PostMapping("/save")
+    @Transactional
     public R save(@RequestBody SpuBoundsEntity spuBounds){
 		spuBoundsService.save(spuBounds);
 
