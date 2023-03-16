@@ -3,9 +3,7 @@ package com.home.mall.order.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.home.common.utils.PageUtils;
 import com.home.mall.order.entity.OrderEntity;
-import com.home.mall.order.vo.OrderConfirmVo;
-import com.home.mall.order.vo.OrderSubmitRespVo;
-import com.home.mall.order.vo.OrderSubmitVo;
+import com.home.mall.order.vo.*;
 
 import java.util.Map;
 
@@ -27,5 +25,13 @@ public interface OrderService extends IService<OrderEntity> {
     OrderSubmitRespVo submitOrder(OrderSubmitVo vo);
 
     OrderEntity getOrderStaus(String orderSn);
+
+    void releaseOrder(OrderEntity order);
+
+    PayVo getPayInfoByOrderSn(String orderSn);
+
+    PageUtils queryPageList(Map<String, Object> params);
+
+    String handlerOrder(PayAsyncVo vo);
 }
 

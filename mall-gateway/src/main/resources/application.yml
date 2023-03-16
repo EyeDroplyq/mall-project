@@ -58,6 +58,10 @@ spring:
           predicates:
             - Host=order.mall.com
 
+        - id: mall_member_route
+          uri: lb://mall-member
+          predicates:
+            - Host=member.mall.com
 
         - id: mall_auth_route
           uri: lb://mall-auth-server

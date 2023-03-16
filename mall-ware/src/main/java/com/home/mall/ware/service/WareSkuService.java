@@ -2,6 +2,7 @@ package com.home.mall.ware.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.home.common.to.HasStockTo;
+import com.home.common.to.OrderTo;
 import com.home.common.to.StockTo;
 import com.home.common.utils.PageUtils;
 import com.home.mall.ware.entity.WareSkuEntity;
@@ -30,5 +31,7 @@ public interface WareSkuService extends IService<WareSkuEntity> {
     Boolean lockOrder(WareSkuLock vo);
 
     void unlockStock(StockTo stockTo);
+
+    void unlockStock(OrderTo orderTo);
 }
 

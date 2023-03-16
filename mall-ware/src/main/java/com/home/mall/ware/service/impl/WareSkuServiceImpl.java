@@ -2,6 +2,7 @@ package com.home.mall.ware.service.impl;
 
 import com.alibaba.fastjson.TypeReference;
 import com.home.common.to.HasStockTo;
+import com.home.common.to.OrderTo;
 import com.home.common.to.StockTo;
 import com.home.common.to.WareOrderDetailTo;
 import com.home.common.utils.R;
@@ -270,6 +271,19 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             }
         } else {
             //锁库存的时候发生失败，这种情况不需要进行解库存
+        }
+    }
+
+    //处理释放订单之后的情况，当订单释放之后来进行解库存
+    @Override
+    @Transactional
+    public void unlockStock(OrderTo orderTo) {
+        String orderSn = orderTo.getOrderSn();
+        WareOrderTaskEntity taskEntity = wareOrderTaskService.getOne(new QueryWrapper<WareOrderTaskEntity>().eq("order_sn", orderSn));
+        List<WareOrderTaskDetailEntity> detailEntityList = wareOrderTaskDetailService.list(new QueryWrapper<WareOrderTaskDetailEntity>().eq("task_id", taskEntity.getId()).eq("lock_status", 1));
+        for (WareOrderTaskDetailEntity entity : detailEntityList) {
+            //Long skuId, Long wareId, Integer num, Long detailId
+            unlock(entity.getSkuId(),entity.getWareId(),entity.getSkuNum(),entity.getId());
         }
     }
 

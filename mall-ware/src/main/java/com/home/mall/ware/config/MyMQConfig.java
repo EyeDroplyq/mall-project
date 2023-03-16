@@ -21,10 +21,6 @@ import java.util.Map;
  */
 @Configuration
 public class MyMQConfig {
-    @Bean
-    public MessageConverter messageConverter(){
-        return new Jackson2JsonMessageConverter();
-    }
 
     @Bean
     public Exchange exchange(){
@@ -42,7 +38,7 @@ public class MyMQConfig {
         Map<String, Object> arguments = new HashMap<>();
         arguments.put("x-dead-letter-exchange", "stock-event-exchange");
         arguments.put("x-dead-letter-routing-key", "stock.release");
-        arguments.put("x-message-ttl", 10000);
+        arguments.put("x-message-ttl", 120000);
         return new Queue("stock.delay.queue",true,false,false,arguments);
     }
 

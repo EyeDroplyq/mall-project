@@ -1,4 +1,4 @@
-package com.home.mall.order.interceptor;
+package com.home.mall.member.Interceptor;
 
 import com.home.common.constant.AuthServerConstant;
 import com.home.common.vo.MemberRespVo;
@@ -8,7 +8,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * @description:
@@ -24,9 +23,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         //远程调用查询订单的状态的时候是不需要进行登录拦截的，所以我们将那个url进行一个放行
         String uri = request.getRequestURI();
         AntPathMatcher matcher=new AntPathMatcher();
-        boolean match = matcher.match("/order/order/getOrderStatus/**", uri);
-        boolean match1 = matcher.match("/payed/notify", uri);
-        if(match|| match1){
+        boolean match = matcher.match("/member/**", uri);
+        if(match){
             return true;
         }
         //从session中得到用户的登录信息
